@@ -24,6 +24,3 @@ InstallIISWindowsFeature -downloadFolder $downloadFolder
 
 # Install url rewrite iis module
 InstallIISModReWrite -downloadFolder $downloadFolder
-
-$expensesConfiguration = "C:\DeployTemp\deploy\expenses.ps1"
-.$expensesConfiguration
