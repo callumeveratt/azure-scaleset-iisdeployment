@@ -25,5 +25,5 @@ InstallIISWindowsFeature -downloadFolder $downloadFolder
 # Install url rewrite iis module
 InstallIISModReWrite -downloadFolder $downloadFolder
 
-$expensesConfiguration = "https://raw.githubusercontent.com/callumeveratt/azure-scaleset-iisdeployment/main/expensesConfiguration.ps1"
+$expensesConfiguration = "C:\DeployTemp\deploy\expenses.ps1"
 .$expensesConfiguration
