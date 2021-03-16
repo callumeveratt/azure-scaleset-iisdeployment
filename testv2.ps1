@@ -19,3 +19,8 @@ New-IISSite -Name 'Expenses' -PhysicalPath 'C:\Products\Expenses' -BindingInform
 Stop-IISCommitDelay
 
 Set-ItemProperty 'IIS:\Sites\Expenses' applicationPool Expenses
+
+$RestartTaskAction = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-command &{Restart-Computer -Force}"
+$RestartTaskTrigger = New-ScheduledTaskTrigger -Once -At (Get-Date).AddSeconds(5); $RestartTaskTrigger.EndBoundary = (Get-Date).AddSeconds(60).ToString('s')
+$RestartTaskSettings = New-ScheduledTaskSettingsSet -DeleteExpiredTaskAfter 00:00:30
+Register-ScheduledTask -Force -User SYSTEM -TaskName "Restart to Join Domain" -Action $RestartTaskAction -Trigger $RestartTaskTrigger -Settings $RestartTaskSettings
