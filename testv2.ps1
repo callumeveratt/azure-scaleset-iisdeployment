@@ -3,14 +3,14 @@ $keyVaultToken = $getKeyVaultAssignedIdentityToken.access_token
 $getdomainPassword = Invoke-RestMethod -Uri https://UKS-SPMT-KV-DEPLOY.vault.azure.net/secrets/applicationPoolPassword?api-version=2016-10-01 -Method GET -Headers @{Authorization="Bearer $keyVaultToken"}
 $domainPassword = $getdomainPassword.value
 
-$expensesDeploymentScript = "C:\DeployTemp\deploy\expenses.ps1"
-.$expensesDeploymentScript
-
 $domain = "selenityazure.com"
 $username =  "selenityazure\apppool-testing"
 $password = $domainPassword | ConvertTo-SecureString -asPlainText -Force
 $credential = New-Object System.Management.Automation.PSCredential($username, $password)
 Add-Computer -DomainName $domain -Credential $credential -Force
+
+$expensesDeploymentScript = "C:\DeployTemp\deploy\expenses.ps1"
+.$expensesDeploymentScript
 
 # Restart to complete domain join
 $RestartTaskAction = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-command &{Restart-Computer -Force}"
