@@ -5,7 +5,7 @@ $applicationPoolPassword = $getapplicationPoolPassword.value
 
 $password =  ConvertTo-SecureString $applicationPoolPassword -AsPlainText -Force
 $credential = New-Object System.Management.Automation.PSCredential("selenityazure\apppool-testing", $password)
-$command = "powershell -ExecutionPolicy Unrestricted -File C:\DeployTemp\deploy\expenses.ps1"
+$command = "powershell -ExecutionPolicy Unrestricted -File C:\DeployTemp\deploy\serverconfig.ps1"
 Enable-PSRemoting –force
 Invoke-Command -FilePath $command -Credential $credential -ComputerName $env:COMPUTERNAME
 Disable-PSRemoting -Force
