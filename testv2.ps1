@@ -10,10 +10,9 @@ $credential = New-Object System.Management.Automation.PSCredential($username, $p
 Add-Computer -DomainName $domain -Credential $credential -Force
 
 $expensesDeploymentScript = "C:\DeployTemp\deploy\expenses.ps1"
-.$expensesDeploymentScript
 
-# Restart to complete domain join
-$RestartTaskAction = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-command &{Restart-Computer -Force}"
-$RestartTaskTrigger = New-ScheduledTaskTrigger -Once -At (Get-Date).AddSeconds(3); $RestartTaskTrigger.EndBoundary = (Get-Date).AddSeconds(60).ToString('s')
-$RestartTaskSettings = New-ScheduledTaskSettingsSet -DeleteExpiredTaskAfter 00:00:30
-Register-ScheduledTask -Force -User SYSTEM -TaskName "Restart to Join Domain" -Action $RestartTaskAction -Trigger $RestartTaskTrigger -Settings $RestartTaskSettings
+# Slightly hacky way of configuring the IIS sites
+$IISTaskAction = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-file $expensesDeploymentScript"
+$IISTaskTrigger = New-ScheduledTaskTrigger -Once -At (Get-Date).AddSeconds(1); $IISTaskTrigger.EndBoundary = (Get-Date).AddSeconds(120).ToString('s')
+$IISTaskSettings = New-ScheduledTaskSettingsSet -DeleteExpiredTaskAfter 00:00:30
+Register-ScheduledTask -Force -User SYSTEM -TaskName "Configure IIS" -Action $IISTaskAction -Trigger $IISTaskTrigger -Settings $IISTaskSettings
