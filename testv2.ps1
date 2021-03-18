@@ -14,7 +14,7 @@ $expensesDeploymentScript = "C:\DeployTemp\deploy\expenses.ps1"
 # Restart to complete domain join
 $ConfigTaskAction = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-file $expensesDeploymentScript"
 $ConfigTaskTrigger = New-ScheduledTaskTrigger -AtStartup -RandomDelay 00:00:30
-Register-ScheduledTask -Force -User SYSTEM -TaskName "Configure IIS Sites" -Action $ConfigTaskAction -Trigger $ConfigTaskTrigger
+Register-ScheduledTask -Force -User $username -Password $domainPassword -TaskName "Configure IIS Sites" -Action $ConfigTaskAction -Trigger $ConfigTaskTrigger
 
 
 # Restart to complete domain join
