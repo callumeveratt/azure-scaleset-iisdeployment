@@ -10,7 +10,12 @@ $credential = New-Object System.Management.Automation.PSCredential($username, $p
 Add-Computer -DomainName $domain -Credential $credential -Force
 
 $expensesDeploymentScript = "C:\DeployTemp\deploy\expenses.ps1"
-.$expensesDeploymentScript
+
+# Restart to complete domain join
+$ConfigTaskAction = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-file $expensesDeploymentScript"
+$ConfigTaskTrigger = New-ScheduledTaskTrigger -AtStartup -RandomDelay 00:00:30
+Register-ScheduledTask -Force -User SYSTEM -TaskName "Configure IIS Sites" -Action $ConfigTaskAction -Trigger $ConfigTaskTrigger
+
 
 # Restart to complete domain join
 $RestartTaskAction = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-command &{Restart-Computer -Force}"
