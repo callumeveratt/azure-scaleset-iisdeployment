@@ -9,7 +9,7 @@ $password = $domainPassword | ConvertTo-SecureString -asPlainText -Force
 $credential = New-Object System.Management.Automation.PSCredential($username, $password)
 Add-Computer -DomainName $domain -Credential $credential -Force
 
-$deploymentScript = "C:\DeployTemp\deploy\iisConfig.ps1"
+$deploymentScript = "C:\DeployTemp\deploy\serverConfig.ps1"
 
 # Restart to complete domain join
 $ConfigTaskAction = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-file $deploymentScript"
