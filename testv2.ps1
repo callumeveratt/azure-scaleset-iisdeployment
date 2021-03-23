@@ -11,7 +11,7 @@ Add-Computer -DomainName $domain -Credential $credential -Force
 
 $deploymentScript = "C:\DeployTemp\deploy\serverConfig.ps1"
 
-# Restart to complete domain join
+# Configure server on reboot
 $ConfigTaskAction = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-file $deploymentScript"
 $ConfigTaskTrigger = New-ScheduledTaskTrigger -AtStartup
 Register-ScheduledTask -Force -User SYSTEM -TaskName "Configure IIS Sites" -Action $ConfigTaskAction -Trigger $ConfigTaskTrigger
