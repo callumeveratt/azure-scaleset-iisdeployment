@@ -9,7 +9,7 @@ $password = $domainPassword | ConvertTo-SecureString -asPlainText -Force
 $credential = New-Object System.Management.Automation.PSCredential($username, $password)
 Add-Computer -DomainName $domain -Credential $credential -Force
 
-$deploymentScript = "C:\DeployTemp\deploy\serverConfig.ps1"
+$deploymentScript = "C:\DeployTemp\ScaleSets\ScaleSets\scripts\serverConfig.ps1"
 
 # Configure server on reboot
 $ConfigTaskAction = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-file $deploymentScript"
