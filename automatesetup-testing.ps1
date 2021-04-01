@@ -3,6 +3,8 @@ $keyVaultToken = $getKeyVaultAssignedIdentityToken.access_token
 $getdomainPassword = Invoke-RestMethod -Uri https://UKS-SPMT-KV-DEPLOY.vault.azure.net/secrets/applicationPoolPassword?api-version=2016-10-01 -Method GET -Headers @{Authorization="Bearer $keyVaultToken"}
 $domainPassword = $getdomainPassword.value
 
+tzutil.exe /s "GMT Standard Time"
+
 $domain = "selenityazure.com"
 $username =  "selenityazure\apppool-testing"
 $password = $domainPassword | ConvertTo-SecureString -asPlainText -Force
