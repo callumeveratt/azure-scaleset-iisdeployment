@@ -16,7 +16,6 @@ $ConfigTaskAction = New-ScheduledTaskAction -Execute "powershell.exe" -Argument 
 $ConfigTaskTrigger = New-ScheduledTaskTrigger -AtStartup
 Register-ScheduledTask -Force -User SYSTEM -TaskName "Configure IIS Sites" -Action $ConfigTaskAction -Trigger $ConfigTaskTrigger
 
-
 # Restart to complete domain join
 $RestartTaskAction = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-command &{Restart-Computer -Force}"
 $RestartTaskTrigger = New-ScheduledTaskTrigger -Once -At (Get-Date).AddSeconds(3); $RestartTaskTrigger.EndBoundary = (Get-Date).AddSeconds(60).ToString('s')
